@@ -15,9 +15,12 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    restaurant = Restaurant.new(restaurant_params)
-    restaurant.save
-    redirect_to restaurant_path(restaurant.id)
+    @restaurant = Restaurant.new(restaurant_params) # ivar since its used in the the formpartial...
+    if @restaurant.save
+      redirect_to restaurant_path(@restaurant.id)
+    else
+      render(:new) #rendering does not execute the new method, instead it only uses the view of new
+    end
   end
 
   # def edit
